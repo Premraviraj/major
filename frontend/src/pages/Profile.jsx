@@ -37,7 +37,7 @@ export default function Profile() {
   }
 
   const totalDist = trips.reduce((s, t) => s + (t.distance_km || 0), 0);
-  const co2 = (totalDist * 0.1).toFixed(1);
+  const co2 = trips.reduce((s, t) => s + (t.co2_saved || (t.distance_km || 0) * 0.1), 0).toFixed(1);
   const ecoTrips = trips.filter(t => t.transport_type === "Metro" || t.transport_type === "Railway").length;
 
   return (
@@ -96,9 +96,9 @@ export default function Profile() {
   );
 }
 
-const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-bottom:100px;`;
-const Bento = styled.div`padding:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;`;
-const AvatarTile = styled.div`grid-column:span 3;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:24px;text-align:center;box-shadow:${p=>p.theme.shadowLg};`;
+const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-bottom:80px;`;
+const Bento = styled.div`padding:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;`;
+const AvatarTile = styled.div`grid-column:span 3;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:20px;text-align:center;box-shadow:${p=>p.theme.shadowLg};`;
 const AvatarBtn = styled.button`font-size:52px;background:${p=>p.theme.surface};border:${p=>p.theme.border};border-radius:50%;width:84px;height:84px;cursor:pointer;position:relative;display:inline-flex;align-items:center;justify-content:center;box-shadow:${p=>p.theme.shadow};`;
 const EditDot = styled.div`position:absolute;bottom:2px;right:2px;background:${p=>p.theme.primary};border:2px solid #1a1a1a;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;color:#fff;`;
 const PName = styled.h2`font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:${p=>p.theme.text};margin:12px 0 3px;`;

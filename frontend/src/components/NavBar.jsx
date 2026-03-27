@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { MdHome, MdAccountBalanceWallet, MdDirectionsBus, MdCardGiftcard, MdPerson, MdSettings, MdLogout, MdExpandLess, MdAltRoute } from "react-icons/md";
+import { MdHome, MdAccountBalanceWallet, MdDirectionsBus, MdCardGiftcard, MdPerson, MdSettings, MdLogout, MdExpandLess } from "react-icons/md";
 import { supabase } from "../supabaseClient";
 
 const tabs = [
   { path: "/",        icon: MdHome,                label: "Home" },
-  { path: "/wallet",  icon: MdAccountBalanceWallet, label: "Wallet" },
   { path: "/travel",  icon: MdDirectionsBus,        label: "Travel" },
-  { path: "/routes",  icon: MdAltRoute,             label: "Routes" },
+  { path: "/wallet",  icon: MdAccountBalanceWallet, label: "Wallet" },
   { path: "/rewards", icon: MdCardGiftcard,         label: "Rewards" },
 ];
 
@@ -57,28 +56,28 @@ export default function NavBar() {
 }
 
 const Nav = styled.nav`
-  position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
-  display: flex; align-items: center; gap: 2px;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  display: flex; align-items: center;
   background: ${p => p.theme.card};
-  border: ${p => p.theme.border};
-  border-radius: 6px; padding: 6px 8px;
-  box-shadow: ${p => p.theme.shadowLg};
+  border-top: ${p => p.theme.border};
+  padding: 6px 4px env(safe-area-inset-bottom, 6px);
+  box-shadow: 0 -4px 0 #1a1a1a;
   z-index: 100;
 `;
 const Tab = styled.button`
-  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
   background: ${p => p.$active ? p.theme.primary : "transparent"};
   border: ${p => p.$active ? p.theme.border : "2px solid transparent"};
-  border-radius: 4px; padding: 8px 14px; cursor: pointer;
+  border-radius: 4px; padding: 7px 4px; cursor: pointer;
   color: ${p => p.$active ? "#fff" : p.theme.muted};
-  box-shadow: ${p => p.$active ? p.theme.shadow : "none"};
-  transition: all 0.15s;
-  &:hover { background: ${p => p.$active ? p.theme.primary : p.theme.surface}; color: ${p => p.$active ? "#fff" : p.theme.text}; }
+  box-shadow: ${p => p.$active ? "2px 2px 0 #1a1a1a" : "none"};
+  transition: all 0.15s; margin: 0 2px;
+  &:active { transform: translate(1px,1px); }
 `;
-const TabLabel = styled.span`font-size: 9px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;`;
+const TabLabel = styled.span`font-size: 9px; font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase;`;
 const Overlay = styled.div`position: fixed; inset: 0; z-index: 99;`;
 const Dropdown = styled.div`
-  position: fixed; bottom: 80px; right: 20px;
+  position: fixed; bottom: 72px; right: 12px;
   background: ${p => p.theme.card};
   border: ${p => p.theme.border};
   border-radius: 4px; padding: 6px; z-index: 100;

@@ -36,7 +36,8 @@ export default function Home() {
 
   const totalTrips = trips.length;
   const totalDist = trips.reduce((s, t) => s + (t.distance_km || 0), 0);
-  const co2 = (totalDist * 0.1).toFixed(1);
+  // Use stored co2_saved if available, otherwise estimate from distance
+  const co2 = trips.reduce((s, t) => s + (t.co2_saved || (t.distance_km || 0) * 0.1), 0).toFixed(1);
   const tokens = profile?.total_tokens || 0;
   const typeCounts = trips.reduce((acc, t) => { acc[t.transport_type] = (acc[t.transport_type] || 0) + 1; return acc; }, {});
 
@@ -195,48 +196,48 @@ export default function Home() {
 
 // Remove unused helper
 
-const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-bottom:100px;`;
+const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-bottom:80px;`;
 
 const HeroTile = styled.div`
   width:100%;background:${p=>p.theme.primary};
   border-bottom:${p=>p.theme.border};
-  padding:24px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:20px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;
 `;
 const HeroLeft = styled.div``;
 const HeroLabel = styled.div`font-size:10px;font-weight:700;color:rgba(255,255,255,0.65);letter-spacing:1.5px;margin-bottom:4px;`;
-const HeroName = styled.h1`font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#fff;margin-bottom:2px;`;
+const HeroName = styled.h1`font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:2px;`;
 const HeroSub = styled.p`font-size:12px;color:rgba(255,255,255,0.65);`;
 const TokenTile = styled.div`
   display:flex;flex-direction:column;align-items:center;gap:1px;
   background:#fff;border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};
-  padding:12px 16px;box-shadow:${p=>p.theme.shadow};flex-shrink:0;
+  padding:10px 14px;box-shadow:${p=>p.theme.shadow};flex-shrink:0;
 `;
-const TNum = styled.div`font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:${p=>p.theme.primary};line-height:1;margin:2px 0;`;
+const TNum = styled.div`font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:${p=>p.theme.primary};line-height:1;margin:2px 0;`;
 const TLbl = styled.div`font-size:10px;font-weight:700;color:${p=>p.theme.muted};letter-spacing:0.5px;`;
 
-const Bento = styled.div`padding:16px 20px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;`;
+const Bento = styled.div`padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;`;
 
 const StatTile = styled.div`
   background:${p=>p.$color||p.theme.card};border:${p=>p.theme.border};
-  border-radius:${p=>p.theme.radius};padding:16px 12px;
+  border-radius:${p=>p.theme.radius};padding:14px 12px;
   box-shadow:${p=>p.theme.shadow};
 `;
-const StatIco = styled.div`color:#1a1a1a;margin-bottom:8px;`;
-const StatNum = styled.div`font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#1a1a1a;line-height:1;`;
-const StatU = styled.span`font-size:11px;font-weight:600;margin-left:1px;`;
+const StatIco = styled.div`color:#1a1a1a;margin-bottom:6px;`;
+const StatNum = styled.div`font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#1a1a1a;line-height:1;`;
+const StatU = styled.span`font-size:10px;font-weight:600;margin-left:1px;`;
 const StatLbl = styled.div`font-size:10px;font-weight:600;color:#1a1a1a;margin-top:3px;text-transform:uppercase;letter-spacing:0.5px;`;
 
-const TransportTile = styled.div`grid-column:span 4;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:16px;box-shadow:${p=>p.theme.shadow};`;
-const TileLabel = styled.div`font-size:10px;font-weight:700;color:${p=>p.theme.muted};letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;`;
-const TTypeGrid = styled.div`display:grid;grid-template-columns:repeat(4,1fr);gap:10px;`;
-const TTypeCard = styled.div`background:${p=>p.theme.surface};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px 8px;text-align:center;box-shadow:3px 3px 0 #1a1a1a;color:#1a1a1a;`;
-const TTypeNum = styled.div`font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin:6px 0 2px;`;
-const TTypeLbl = styled.div`font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;`;
+const TransportTile = styled.div`grid-column:span 2;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};`;
+const TileLabel = styled.div`font-size:10px;font-weight:700;color:${p=>p.theme.muted};letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;`;
+const TTypeGrid = styled.div`display:grid;grid-template-columns:repeat(4,1fr);gap:8px;`;
+const TTypeCard = styled.div`background:${p=>p.theme.surface};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:12px 6px;text-align:center;box-shadow:3px 3px 0 #1a1a1a;color:#1a1a1a;`;
+const TTypeNum = styled.div`font-family:'Syne',sans-serif;font-size:18px;font-weight:800;margin:4px 0 2px;`;
+const TTypeLbl = styled.div`font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;`;
 
-const ChartTile = styled.div`grid-column:span 3;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:16px;box-shadow:${p=>p.theme.shadow};`;
-const DonutTile = styled.div`grid-column:span 1;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:16px;box-shadow:${p=>p.theme.shadow};`;
+const ChartTile = styled.div`grid-column:span 2;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};`;
+const DonutTile = styled.div`grid-column:span 2;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};`;
 
-const LeaderTile = styled.div`grid-column:span 4;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:16px;box-shadow:${p=>p.theme.shadow};display:flex;flex-direction:column;gap:6px;`;
+const LeaderTile = styled.div`grid-column:span 2;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};display:flex;flex-direction:column;gap:6px;`;
 const LRow = styled.div`display:flex;align-items:center;gap:10px;background:${p=>p.$me?p.theme.tag:p.theme.surface};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:10px 12px;`;
 const LRank = styled.div`font-size:16px;width:24px;text-align:center;`;
 const LAv = styled.div`font-size:20px;width:28px;text-align:center;`;
