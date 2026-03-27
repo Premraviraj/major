@@ -1,0 +1,25 @@
+# Environment files — never commit these
+.env
+.env.local
+.env.development
+.env.production
+.env.*.local
+
+# SQL files — database schema kept private
+*.sql
+
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Build output
+frontend/dist/
+frontend/.vite/
+
+# Supabase local
+supabase/.branches/
+supabase/.temp/
+
+# OS
+.DS_Store
+Thumbs.db

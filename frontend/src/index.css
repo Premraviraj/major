@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; min-height: 100vh; }
+body {
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+  background: #f5f0e8;
+  color: #1a1a1a;
+  overflow-x: hidden;
+}
+input, button, select, textarea { font-family: inherit; }
+.loading-screen {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; color: #1a1a1a; font-size: 18px; background: #f5f0e8;
+}
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 0; }
