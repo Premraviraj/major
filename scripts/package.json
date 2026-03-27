@@ -1,0 +1,9 @@
+{
+  "name": "transport-scripts",
+  "type": "module",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "csv-parse": "^5.5.0",
+    "dotenv": "^16.0.0"
+  }
+}

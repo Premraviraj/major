@@ -10,6 +10,7 @@ import Wallet from "./pages/Wallet";
 import Rewards from "./pages/Rewards";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
+import RoutesPage from "./pages/Routes";
 import NavBar from "./components/NavBar";
 import "./index.css";
 
@@ -32,7 +33,8 @@ function AppRoutes() {
         <Route path="/travel" element={<ProtectedRoute><Travel /></ProtectedRoute>} />
         <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
         <Route path="/rewards" element={<ProtectedRoute><Rewards /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/routes"   element={<ProtectedRoute><RoutesPage /></ProtectedRoute>} />
+        <Route path="/profile"  element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

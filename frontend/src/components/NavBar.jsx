@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { MdHome, MdAccountBalanceWallet, MdDirectionsBus, MdCardGiftcard, MdPerson, MdSettings, MdLogout, MdExpandLess } from "react-icons/md";
+import { MdHome, MdAccountBalanceWallet, MdDirectionsBus, MdCardGiftcard, MdPerson, MdSettings, MdLogout, MdExpandLess, MdAltRoute } from "react-icons/md";
 import { supabase } from "../supabaseClient";
 
 const tabs = [
   { path: "/",        icon: MdHome,                label: "Home" },
   { path: "/wallet",  icon: MdAccountBalanceWallet, label: "Wallet" },
   { path: "/travel",  icon: MdDirectionsBus,        label: "Travel" },
+  { path: "/routes",  icon: MdAltRoute,             label: "Routes" },
   { path: "/rewards", icon: MdCardGiftcard,         label: "Rewards" },
 ];
 
