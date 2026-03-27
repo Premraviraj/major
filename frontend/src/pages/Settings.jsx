@@ -52,7 +52,7 @@ export default function Settings() {
   );
 }
 
-const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-bottom:80px;`;
+const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-top:52px;padding-bottom:32px;`;
 const Header = styled.div`padding:16px 14px 0;`;
 const PageTitle = styled.h1`font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:${p=>p.theme.text};`;
 const Bento = styled.div`padding:12px 14px;display:flex;flex-direction:column;gap:12px;`;

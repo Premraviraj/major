@@ -196,12 +196,12 @@ export default function Home() {
 
 // Remove unused helper
 
-const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-bottom:80px;`;
+const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-top:52px;padding-bottom:32px;`;
 
 const HeroTile = styled.div`
   width:100%;background:${p=>p.theme.primary};
   border-bottom:${p=>p.theme.border};
-  padding:20px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:16px 16px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;
 `;
 const HeroLeft = styled.div``;
 const HeroLabel = styled.div`font-size:10px;font-weight:700;color:rgba(255,255,255,0.65);letter-spacing:1.5px;margin-bottom:4px;`;

@@ -93,7 +93,7 @@ export default function Wallet() {
   );
 }
 
-const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-bottom:80px;`;
+const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-top:52px;padding-bottom:32px;`;
 const Header = styled.div`display:flex;align-items:center;gap:12px;padding:16px 16px 0;`;
 const PageTitle = styled.h1`font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:${p=>p.theme.text};`;
 const Tag = styled.span`background:${p=>p.theme.tag};color:${p=>p.theme.tagText};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:3px 10px;font-size:11px;font-weight:700;letter-spacing:1px;`;

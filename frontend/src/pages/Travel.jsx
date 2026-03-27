@@ -625,8 +625,8 @@ export default function Travel() {
   );
 }
 
-const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-bottom:80px;`;
-const MapWrap = styled.div`width:100%;height:220px;position:relative;border-bottom:2px solid #1a1a1a;`;
+const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-top:52px;padding-bottom:32px;`;
+const MapWrap = styled.div`width:100%;height:220px;position:relative;border-bottom:2px solid #1a1a1a;z-index:0;isolation:isolate;`;
 const MapPlaceholder = styled.div`height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:${p=>p.theme.surface};color:${p=>p.theme.muted};font-size:14px;`;
 const GpsBadge = styled.div`position:absolute;top:10px;right:10px;background:#fff;border:2px solid #1a1a1a;color:#1a1a1a;font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;z-index:999;box-shadow:2px 2px 0 #1a1a1a;`;
 const MapTitle = styled.div`position:absolute;top:10px;left:10px;background:${p=>p.theme.primary};border:2px solid #1a1a1a;color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;z-index:999;box-shadow:2px 2px 0 #1a1a1a;text-transform:uppercase;letter-spacing:0.5px;`;

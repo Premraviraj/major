@@ -1,93 +1,277 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import styled from "styled-components";
-import { MdHome, MdAccountBalanceWallet, MdDirectionsBus, MdCardGiftcard, MdPerson, MdSettings, MdLogout, MdExpandLess } from "react-icons/md";
+import styled, { useTheme } from "styled-components";
+import { gsap } from "gsap";
+import {
+  MdHome, MdAccountBalanceWallet, MdDirectionsBus,
+  MdCardGiftcard, MdPerson, MdSettings, MdLogout,
+} from "react-icons/md";
 import { supabase } from "../supabaseClient";
 
-const tabs = [
-  { path: "/",        icon: MdHome,                label: "Home" },
-  { path: "/travel",  icon: MdDirectionsBus,        label: "Travel" },
-  { path: "/wallet",  icon: MdAccountBalanceWallet, label: "Wallet" },
-  { path: "/rewards", icon: MdCardGiftcard,         label: "Rewards" },
+const NAV_ITEMS = [
+  { path: "/",         icon: MdHome,                label: "Home" },
+  { path: "/travel",   icon: MdDirectionsBus,        label: "Travel" },
+  { path: "/wallet",   icon: MdAccountBalanceWallet, label: "Wallet" },
+  { path: "/rewards",  icon: MdCardGiftcard,         label: "Rewards" },
+  { path: "/profile",  icon: MdPerson,               label: "Profile" },
+  { path: "/settings", icon: MdSettings,             label: "Settings" },
 ];
 
 export default function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [accountOpen, setAccountOpen] = useState(false);
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+  const navRef = useRef(null);
+  const tlRef = useRef(null);
+
+  function toggleMenu() {
+    const nav = navRef.current;
+    if (!nav) return;
+    if (tlRef.current) tlRef.current.kill();
+
+    if (!open) {
+      setOpen(true);
+      tlRef.current = gsap.timeline()
+        .to(nav, { "--panel-bottom-1": "100%", duration: 0.4, ease: "power1.out" })
+        .to(nav, { "--panel-bottom-2": "100%", duration: 0.4, ease: "power1.out" }, 0.08)
+        .to(nav, { "--panel-bottom-3": "100%", duration: 0.4, ease: "power1.out" }, 0.16)
+        .to(nav, { "--panel-bottom-4": "100%", duration: 0.4, ease: "power1.out" }, 0.24);
+    } else {
+      tlRef.current = gsap.timeline({
+        onComplete: () => setOpen(false),
+      })
+        .to(nav, { "--panel-bottom-4": "0%", duration: 0.35, ease: "power1.in" })
+        .to(nav, { "--panel-bottom-3": "0%", duration: 0.35, ease: "power1.in" }, 0.08)
+        .to(nav, { "--panel-bottom-2": "0%", duration: 0.35, ease: "power1.in" }, 0.16)
+        .to(nav, { "--panel-bottom-1": "0%", duration: 0.35, ease: "power1.in" }, 0.24);
+    }
+  }
+
+  function goTo(path) {
+    toggleMenu();
+    setTimeout(() => navigate(path), 500);
+  }
 
   async function signOut() {
-    await supabase.auth.signOut();
-    navigate("/login");
+    toggleMenu();
+    setTimeout(async () => {
+      await supabase.auth.signOut();
+      navigate("/login");
+    }, 600);
   }
 
   return (
     <>
-      {accountOpen && <Overlay onClick={() => setAccountOpen(false)} />}
-      {accountOpen && (
-        <Dropdown>
-          <DropItem onClick={() => { navigate("/profile"); setAccountOpen(false); }}>
-            <MdPerson size={15} />Profile
-          </DropItem>
-          <DropItem onClick={() => { navigate("/settings"); setAccountOpen(false); }}>
-            <MdSettings size={15} />Settings
-          </DropItem>
-          <DropDivider />
-          <DropItem $danger onClick={signOut}>
-            <MdLogout size={15} />Sign Out
-          </DropItem>
-        </Dropdown>
-      )}
-      <Nav>
-        {tabs.map(({ path, icon: Icon, label }) => (
-          <Tab key={path} $active={location.pathname === path} onClick={() => navigate(path)}>
-            <Icon size={20} />
-            <TabLabel>{label}</TabLabel>
-          </Tab>
-        ))}
-        <Tab $active={accountOpen} onClick={() => setAccountOpen(v => !v)}>
-          <MdPerson size={20} />
-          <TabLabel>Account</TabLabel>
-          <MdExpandLess size={12} style={{ transform: accountOpen ? "rotate(0deg)" : "rotate(180deg)", transition: "0.2s" }} />
-        </Tab>
-      </Nav>
+      <TopBar>
+        <Brand>TransitRewards</Brand>
+        <Trigger onClick={toggleMenu} $open={open} aria-label={open ? "Close menu" : "Open menu"}>
+          <Line $open={open} $top />
+          <Line $open={open} />
+        </Trigger>
+      </TopBar>
+
+      <FullNav
+        ref={navRef}
+        $open={open}
+        $bg={theme.primary}
+        style={{
+          "--panel-bottom-1": "0%",
+          "--panel-bottom-2": "0%",
+          "--panel-bottom-3": "0%",
+          "--panel-bottom-4": "0%",
+        }}
+      >
+        <NavInner>
+          <NavList>
+            {NAV_ITEMS.map(({ path, icon: Icon, label }) => {
+              const active = location.pathname === path;
+              return (
+                <NavItem key={path}>
+                  <NavLink onClick={() => goTo(path)} $active={active}>
+                    <NavIcon><Icon size={20} /></NavIcon>
+                    <span>{label}</span>
+                    {active && <ActiveDot />}
+                  </NavLink>
+                </NavItem>
+              );
+            })}
+          </NavList>
+
+          <SignOutBtn onClick={signOut}>
+            <MdLogout size={16} />
+            Sign Out
+          </SignOutBtn>
+        </NavInner>
+      </FullNav>
     </>
   );
 }
 
-const Nav = styled.nav`
-  position: fixed; bottom: 0; left: 0; right: 0;
-  display: flex; align-items: center;
+/* ── Styles ── */
+
+const TopBar = styled.header`
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 52px;
   background: ${p => p.theme.card};
-  border-top: ${p => p.theme.border};
-  padding: 6px 4px env(safe-area-inset-bottom, 6px);
-  box-shadow: 0 -4px 0 #1a1a1a;
-  z-index: 100;
+  border-bottom: ${p => p.theme.border};
+  box-shadow: 0 4px 0 #1a1a1a;
 `;
-const Tab = styled.button`
-  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
-  background: ${p => p.$active ? p.theme.primary : "transparent"};
-  border: ${p => p.$active ? p.theme.border : "2px solid transparent"};
-  border-radius: 4px; padding: 7px 4px; cursor: pointer;
-  color: ${p => p.$active ? "#fff" : p.theme.muted};
-  box-shadow: ${p => p.$active ? "2px 2px 0 #1a1a1a" : "none"};
-  transition: all 0.15s; margin: 0 2px;
-  &:active { transform: translate(1px,1px); }
+
+const Brand = styled.div`
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: ${p => p.theme.primary};
+  letter-spacing: -0.3px;
 `;
-const TabLabel = styled.span`font-size: 9px; font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase;`;
-const Overlay = styled.div`position: fixed; inset: 0; z-index: 99;`;
-const Dropdown = styled.div`
-  position: fixed; bottom: 72px; right: 12px;
-  background: ${p => p.theme.card};
-  border: ${p => p.theme.border};
-  border-radius: 4px; padding: 6px; z-index: 100;
-  box-shadow: ${p => p.theme.shadowLg}; min-width: 150px;
+
+const Trigger = styled.button`
+  position: relative;
+  background: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  z-index: 201;
 `;
-const DropItem = styled.button`
-  display: flex; align-items: center; gap: 8px; width: 100%;
-  background: none; border: none; border-radius: 3px;
-  padding: 9px 12px; cursor: pointer; font-size: 13px; font-weight: 600;
-  color: ${p => p.$danger ? "#d94f2a" : p.theme.text};
-  &:hover { background: ${p => p.$danger ? "#fecaca" : p.theme.surface}; }
+
+const Line = styled.span`
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: ${p => p.theme.text};
+  transition: transform 0.55s cubic-bezier(0.17, 0.67, 0, 1),
+              opacity 0.3s ease;
+  transform-origin: center;
+
+  ${p => p.$top && p.$open && `
+    transform: translateY(3.5px) rotate(45deg) scaleX(0.9);
+  `}
+  ${p => !p.$top && p.$open && `
+    transform: translateY(-3.5px) rotate(-45deg) scaleX(0.9);
+  `}
 `;
-const DropDivider = styled.div`height: 1px; background: #1a1a1a; margin: 4px 0; opacity: 0.12;`;
+
+const FullNav = styled.nav`
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: ${p => p.$bg};
+  pointer-events: ${p => p.$open ? "all" : "none"};
+  overflow-y: auto;
+  clip-path: polygon(
+    0 0,
+    0 var(--panel-bottom-1),
+    25% var(--panel-bottom-1),
+    25% 0,
+
+    25% 0,
+    25% var(--panel-bottom-2),
+    50% var(--panel-bottom-2),
+    50% 0,
+
+    50% 0,
+    50% var(--panel-bottom-3),
+    75% var(--panel-bottom-3),
+    75% 0,
+
+    75% 0,
+    75% var(--panel-bottom-4),
+    100% var(--panel-bottom-4),
+    100% 0
+  );
+`;
+
+const NavInner = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 80px 28px 48px;
+`;
+
+const NavList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+`;
+
+const NavItem = styled.li`
+  & + & { margin-top: 0.15em; }
+`;
+
+const NavLink = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 0;
+  width: 100%;
+
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 11vw, 3.4rem);
+  font-weight: 700;
+  color: ${p => p.$active ? "#fff" : "rgba(255,255,255,0.65)"};
+  letter-spacing: -0.5px;
+  line-height: 1;
+  transition: color 0.2s ease, letter-spacing 0.45s cubic-bezier(0.17, 0.67, 0, 1);
+
+  &:hover {
+    color: #fff;
+    letter-spacing: 1px;
+  }
+`;
+
+const NavIcon = styled.span`
+  display: flex;
+  align-items: center;
+  color: rgba(255,255,255,0.55);
+  flex-shrink: 0;
+  margin-top: 2px;
+`;
+
+const ActiveDot = styled.span`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid rgba(0,0,0,0.3);
+  margin-left: 6px;
+  flex-shrink: 0;
+`;
+
+const SignOutBtn = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.12);
+  border: 2px solid rgba(255,255,255,0.35);
+  border-radius: 4px;
+  padding: 12px 20px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 36px;
+  width: fit-content;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: background 0.2s;
+
+  &:hover { background: rgba(255,255,255,0.22); }
+`;

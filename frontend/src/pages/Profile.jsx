@@ -96,7 +96,7 @@ export default function Profile() {
   );
 }
 
-const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-bottom:80px;`;
+const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-top:52px;padding-bottom:32px;`;
 const Bento = styled.div`padding:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;`;
 const AvatarTile = styled.div`grid-column:span 3;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:20px;text-align:center;box-shadow:${p=>p.theme.shadowLg};`;
 const AvatarBtn = styled.button`font-size:52px;background:${p=>p.theme.surface};border:${p=>p.theme.border};border-radius:50%;width:84px;height:84px;cursor:pointer;position:relative;display:inline-flex;align-items:center;justify-content:center;box-shadow:${p=>p.theme.shadow};`;
