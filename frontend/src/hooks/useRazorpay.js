@@ -30,20 +30,8 @@ export function useRazorpay() {
       name: "TRIPP.",
       description,
 
-      // Force only UPI + card, UPI listed first
-      method: {
-        upi: true,
-        card: true,
-        netbanking: false,
-        wallet: false,
-        emi: false,
-        paylater: false,
-      },
-
-      // Pre-fill test UPI VPA so user just hits pay
-      prefill: {
-        vpa: "success@razorpay",
-      },
+      // No method restrictions — show all available payment modes
+      // (card, UPI, netbanking, wallet, etc. based on account settings)
 
       handler: function (response) {
         onSuccess?.(response.razorpay_payment_id);
