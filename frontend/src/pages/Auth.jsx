@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { supabase } from "../supabaseClient";
-import { MdEmail, MdLock, MdPerson, MdAlternateEmail, MdVisibility, MdVisibilityOff, MdDirectionsBus } from "react-icons/md";
+import { MdEmail, MdLock, MdPerson, MdAlternateEmail, MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { LogoFull } from "../components/Logo";
 
 export default function Auth({ mode }) {
   const isLogin = mode === "login";
@@ -34,10 +35,10 @@ export default function Auth({ mode }) {
   return (
     <Page>
       <Wrap>
-        <BrandRow><BusIcon><MdDirectionsBus size={22} /></BusIcon><Brand>TransitRewards</Brand></BrandRow>
+        <BrandRow><LogoFull size={38} /></BrandRow>
         <Card>
           <CardTitle>{isLogin ? "Sign In" : "Create Account"}</CardTitle>
-          <CardSub>{isLogin ? "Welcome back, traveler" : "Start earning tokens for every trip"}</CardSub>
+          <CardSub>{isLogin ? "welcome back, bestie 👋" : "start earning tokens for every trip 🚌"}</CardSub>
           <Form onSubmit={submit}>
             {!isLogin && (
               <>
@@ -58,7 +59,7 @@ export default function Auth({ mode }) {
             {isLogin ? <>No account? <Link to="/signup">Sign up</Link></> : <>Have an account? <Link to="/login">Sign in</Link></>}
           </SwitchRow>
         </Card>
-        <Tagline>🚌 Ride public transport · Earn TRT tokens · Redeem rewards</Tagline>
+        <Tagline>🚌 ride public transit · earn TRT · redeem rewards · no cap</Tagline>
       </Wrap>
     </Page>
   );

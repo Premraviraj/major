@@ -83,18 +83,18 @@ export default function Rewards() {
   );
 }
 
-const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-bottom:100px;`;
-const Header = styled.div`display:flex;justify-content:space-between;align-items:center;padding:20px 20px 0;`;
-const PageTitle = styled.h1`font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:${p=>p.theme.text};`;
-const TokenChip = styled.div`display:flex;align-items:center;gap:5px;background:${p=>p.theme.tag};color:${p=>p.theme.tagText};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:6px 12px;font-weight:700;font-size:13px;box-shadow:${p=>p.theme.shadow};`;
-const Toast = styled.div`margin:12px 20px 0;background:${p=>p.theme.tag};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:10px 14px;color:${p=>p.theme.tagText};font-size:13px;font-weight:600;`;
-const Filters = styled.div`display:flex;gap:8px;padding:16px 20px 0;overflow-x:auto;&::-webkit-scrollbar{display:none;}`;
-const FilterBtn = styled.button`padding:7px 16px;border-radius:${p=>p.theme.radius};white-space:nowrap;font-size:12px;font-weight:600;cursor:pointer;border:${p=>p.theme.border};background:${p=>p.active?p.theme.primary:p.theme.surface};color:${p=>p.active?"#fff":p.theme.text};box-shadow:${p=>p.active?p.theme.shadow:"none"};`;
-const Grid = styled.div`display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px 20px;`;
-const RCard = styled.div`background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:16px;display:flex;flex-direction:column;gap:8px;box-shadow:${p=>p.theme.shadow};`;
-const RIco = styled.div`width:44px;height:44px;border-radius:${p=>p.theme.radius};display:flex;align-items:center;justify-content:center;border:2px solid #1a1a1a;`;
-const RTitle = styled.div`font-size:14px;font-weight:700;color:${p=>p.theme.text};`;
+const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-top:52px;padding-bottom:32px;`;
+const Header = styled.div`display:flex;justify-content:space-between;align-items:center;padding:16px 14px 0;@media(min-width:768px){padding:24px 32px 0;}`;
+const PageTitle = styled.h1`font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:${p=>p.theme.text};@media(min-width:768px){font-size:30px;}`;
+const TokenChip = styled.div`display:flex;align-items:center;gap:5px;background:${p=>p.theme.tag};color:${p=>p.theme.tagText};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:6px 10px;font-weight:700;font-size:13px;box-shadow:${p=>p.theme.shadow};`;
+const Toast = styled.div`margin:10px 14px 0;background:${p=>p.theme.tag};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:10px 14px;color:${p=>p.theme.tagText};font-size:13px;font-weight:600;@media(min-width:768px){margin:12px 32px 0;}`;
+const Filters = styled.div`display:flex;gap:8px;padding:14px 14px 0;overflow-x:auto;&::-webkit-scrollbar{display:none;}@media(min-width:768px){padding:16px 32px 0;}`;
+const FilterBtn = styled.button`padding:7px 14px;border-radius:${p=>p.theme.radius};white-space:nowrap;font-size:12px;font-weight:600;cursor:pointer;border:${p=>p.theme.border};background:${p=>p.active?p.theme.primary:p.theme.surface};color:${p=>p.active?"#fff":p.theme.text};box-shadow:${p=>p.active?p.theme.shadow:"none"};`;
+const Grid = styled.div`display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 14px;@media(min-width:768px){grid-template-columns:repeat(3,1fr);gap:16px;padding:20px 32px;}@media(min-width:1024px){grid-template-columns:repeat(4,1fr);}`;
+const RCard = styled.div`background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:${p=>p.theme.shadow};`;
+const RIco = styled.div`width:40px;height:40px;border-radius:${p=>p.theme.radius};display:flex;align-items:center;justify-content:center;border:2px solid #1a1a1a;`;
+const RTitle = styled.div`font-size:13px;font-weight:700;color:${p=>p.theme.text};`;
 const RDesc = styled.div`font-size:11px;color:${p=>p.theme.muted};flex:1;line-height:1.4;`;
 const RBottom = styled.div`display:flex;align-items:center;justify-content:space-between;margin-top:4px;`;
 const RCost = styled.div`display:flex;align-items:center;gap:3px;font-size:12px;font-weight:700;color:${p=>p.theme.primary};`;
-const RBtn = styled.button`padding:7px 12px;border-radius:${p=>p.theme.radius};font-size:11px;font-weight:700;cursor:${p=>p.can?"pointer":"not-allowed"};background:${p=>p.can?p.theme.primary:p.theme.surface};border:${p=>p.theme.border};color:${p=>p.can?"#fff":p.theme.muted};box-shadow:${p=>p.can?p.theme.shadow:"none"};`;
+const RBtn = styled.button`padding:6px 10px;border-radius:${p=>p.theme.radius};font-size:11px;font-weight:700;cursor:${p=>p.can?"pointer":"not-allowed"};background:${p=>p.can?p.theme.primary:p.theme.surface};border:${p=>p.theme.border};color:${p=>p.can?"#fff":p.theme.muted};box-shadow:${p=>p.can?p.theme.shadow:"none"};`;

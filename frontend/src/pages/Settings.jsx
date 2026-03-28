@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { useTheme } from "../context/ThemeContext";
-import { MdCheck } from "react-icons/md";
+import { MdCheck, MdForest, MdLocalFireDepartment, MdWaves, MdAir, MdRocketLaunch } from "react-icons/md";
 
 const THEME_META = {
-  earth: { emoji: "🌍", desc: "Warm gold" },
-  fire:  { emoji: "🔥", desc: "Bold red" },
-  water: { emoji: "💧", desc: "Cool cyan" },
-  air:   { emoji: "🌬️", desc: "Soft purple" },
-  space: { emoji: "🚀", desc: "Teal cosmos" },
+  earth: { icon: MdForest,               desc: "Warm gold"    },
+  fire:  { icon: MdLocalFireDepartment,  desc: "Bold red"     },
+  water: { icon: MdWaves,                desc: "Cool cyan"    },
+  air:   { icon: MdAir,                  desc: "Soft purple"  },
+  space: { icon: MdRocketLaunch,         desc: "Teal cosmos"  },
 };
 
 export default function Settings() {
@@ -22,19 +22,25 @@ export default function Settings() {
         <SectionTile>
           <TileLabel>CHOOSE THEME</TileLabel>
           <ThemeGrid>
-            {Object.entries(themes).map(([key, t]) => (
-              <TCard key={key} active={theme.name === t.name} style={{ borderTop: `4px solid ${t.primary}` }} onClick={() => setTheme(t)}>
-                <TEmoji>{THEME_META[key].emoji}</TEmoji>
-                <TName>{t.name}</TName>
-                <TDesc>{THEME_META[key].desc}</TDesc>
-                <Swatches>
-                  <Sw style={{ background: t.primary }} />
-                  <Sw style={{ background: t.accent }} />
-                  <Sw style={{ background: t.tag }} />
-                </Swatches>
-                {theme.name === t.name && <ActiveMark><MdCheck size={11} /></ActiveMark>}
-              </TCard>
-            ))}
+            {Object.entries(themes).map(([key, t]) => {
+              const Icon = THEME_META[key].icon;
+              const active = theme.name === t.name;
+              return (
+                <TCard key={key} $active={active} style={{ borderTop: `4px solid ${t.primary}` }} onClick={() => setTheme(t)}>
+                  <TIconWrap style={{ background: t.primary + "22", color: t.primary }}>
+                    <Icon size={22} />
+                  </TIconWrap>
+                  <TName>{t.name}</TName>
+                  <TDesc>{THEME_META[key].desc}</TDesc>
+                  <Swatches>
+                    <Sw style={{ background: t.primary }} />
+                    <Sw style={{ background: t.accent }} />
+                    <Sw style={{ background: t.tag }} />
+                  </Swatches>
+                  {active && <ActiveMark><MdCheck size={11} /></ActiveMark>}
+                </TCard>
+              );
+            })}
           </ThemeGrid>
         </SectionTile>
 
@@ -53,14 +59,14 @@ export default function Settings() {
 }
 
 const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-top:52px;padding-bottom:32px;`;
-const Header = styled.div`padding:16px 14px 0;`;
-const PageTitle = styled.h1`font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:${p=>p.theme.text};`;
-const Bento = styled.div`padding:12px 14px;display:flex;flex-direction:column;gap:12px;`;
-const SectionTile = styled.div`background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};`;
+const Header = styled.div`padding:16px 14px 0;@media(min-width:768px){padding:24px 32px 0;}`;
+const PageTitle = styled.h1`font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:${p=>p.theme.text};@media(min-width:768px){font-size:30px;}`;
+const Bento = styled.div`padding:12px 14px;display:flex;flex-direction:column;gap:12px;@media(min-width:768px){padding:20px 32px;gap:20px;}`;
+const SectionTile = styled.div`background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};@media(min-width:768px){padding:24px;}`;
 const TileLabel = styled.div`font-size:10px;font-weight:700;color:${p=>p.theme.muted};letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;`;
-const ThemeGrid = styled.div`display:grid;grid-template-columns:repeat(3,1fr);gap:8px;`;
-const TCard = styled.div`background:${p=>p.active?p.theme.surface:p.theme.bg};border:${p=>p.active?p.theme.border:"2px solid transparent"};border-radius:${p=>p.theme.radius};padding:14px 10px;cursor:pointer;position:relative;box-shadow:${p=>p.active?p.theme.shadow:"none"};transition:all 0.15s;`;
-const TEmoji = styled.div`font-size:24px;margin-bottom:6px;`;
+const ThemeGrid = styled.div`display:grid;grid-template-columns:repeat(3,1fr);gap:8px;@media(min-width:768px){grid-template-columns:repeat(5,1fr);gap:12px;}`;
+const TCard = styled.div`background:${p=>p.$active?p.theme.surface:p.theme.bg};border:${p=>p.$active?p.theme.border:"2px solid transparent"};border-radius:${p=>p.theme.radius};padding:14px 10px;cursor:pointer;position:relative;box-shadow:${p=>p.$active?p.theme.shadow:"none"};transition:all 0.15s;&:hover{box-shadow:${p=>p.theme.shadow};}`;
+const TIconWrap = styled.div`width:44px;height:44px;border-radius:${p=>p.theme.radius};border:2px solid #1a1a1a;display:flex;align-items:center;justify-content:center;margin-bottom:10px;box-shadow:2px 2px 0 #1a1a1a;`;
 const TName = styled.div`font-size:12px;font-weight:700;color:${p=>p.theme.text};margin-bottom:2px;`;
 const TDesc = styled.div`font-size:10px;color:${p=>p.theme.muted};margin-bottom:8px;`;
 const Swatches = styled.div`display:flex;gap:4px;`;

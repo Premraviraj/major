@@ -94,23 +94,26 @@ export default function Wallet() {
 }
 
 const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-top:52px;padding-bottom:32px;`;
-const Header = styled.div`display:flex;align-items:center;gap:12px;padding:16px 16px 0;`;
-const PageTitle = styled.h1`font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:${p=>p.theme.text};`;
+const Header = styled.div`display:flex;align-items:center;gap:12px;padding:16px 16px 0;@media(min-width:768px){padding:24px 32px 0;}`;
+const PageTitle = styled.h1`font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:${p=>p.theme.text};@media(min-width:768px){font-size:30px;}`;
 const Tag = styled.span`background:${p=>p.theme.tag};color:${p=>p.theme.tagText};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:3px 10px;font-size:11px;font-weight:700;letter-spacing:1px;`;
-const Bento = styled.div`padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;`;
-const BalanceTile = styled.div`grid-column:span 2;background:${p=>p.theme.primary};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:20px;box-shadow:${p=>p.theme.shadowLg};color:#fff;`;
+const Bento = styled.div`
+  padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  @media(min-width:768px){padding:20px 32px;grid-template-columns:1fr 1fr;gap:16px;}
+`;
+const BalanceTile = styled.div`grid-column:span 2;background:${p=>p.theme.primary};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:20px;box-shadow:${p=>p.theme.shadowLg};color:#fff;@media(min-width:768px){padding:28px;}`;
 const BalTop = styled.div`display:flex;align-items:center;gap:12px;margin-bottom:4px;`;
 const BalIcon = styled.div`opacity:0.8;`;
-const BalVal = styled.div`font-family:'Syne',sans-serif;font-size:42px;font-weight:800;line-height:1;`;
+const BalVal = styled.div`font-family:'Syne',sans-serif;font-size:42px;font-weight:800;line-height:1;@media(min-width:768px){font-size:56px;}`;
 const BalLabel = styled.div`font-size:11px;font-weight:700;letter-spacing:1.5px;opacity:0.7;margin-bottom:12px;`;
 const BalStats = styled.div`display:flex;gap:20px;`;
 const BalStat = styled.div`display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:${p=>p.$green?"#d1fae5":"#fecaca"};`;
-const EarnedTile = styled.div`background:#d1fae5;border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:16px;box-shadow:${p=>p.theme.shadow};`;
-const SpentTile = styled.div`background:#fecaca;border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:16px;box-shadow:${p=>p.theme.shadow};`;
+const EarnedTile = styled.div`background:#d1fae5;border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:16px;box-shadow:${p=>p.theme.shadow};@media(min-width:768px){padding:28px;}`;
+const SpentTile = styled.div`background:#fecaca;border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:16px;box-shadow:${p=>p.theme.shadow};@media(min-width:768px){padding:28px;}`;
 const MiniLabel = styled.div`font-size:10px;font-weight:700;letter-spacing:1.5px;color:#1a1a1a;margin-bottom:6px;`;
-const MiniVal = styled.div`font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:${p=>p.$green?"#065f46":"#991b1b"};`;
+const MiniVal = styled.div`font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:${p=>p.$green?"#065f46":"#991b1b"};@media(min-width:768px){font-size:34px;}`;
 const MiniSub = styled.div`font-size:11px;color:#1a1a1a;margin-top:2px;`;
-const HistoryTile = styled.div`grid-column:span 2;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};display:flex;flex-direction:column;gap:8px;`;
+const HistoryTile = styled.div`grid-column:span 2;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};display:flex;flex-direction:column;gap:8px;@media(min-width:768px){padding:24px;}`;
 const TileLabel = styled.div`font-size:10px;font-weight:700;color:${p=>p.theme.muted};letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;`;
 const Empty = styled.p`color:${p=>p.theme.muted};font-size:13px;text-align:center;padding:20px 0;`;
 const TxRow = styled.div`display:flex;align-items:center;gap:10px;background:${p=>p.theme.surface};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:10px 12px;`;

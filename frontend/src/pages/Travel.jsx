@@ -332,7 +332,7 @@ export default function Travel() {
         <TypeRow>
           {transportTypes.map(({ key, icon: Icon, color }) => (
             <TypeBtn key={key} $active={filter === key} $color={color} onClick={() => { setFilter(key); setSelectedRoute(null); setBmtcRoutes([]); }}>
-              <Icon size={20} /><span>{key}</span>
+              <Icon size={22} /><span>{key}</span>
             </TypeBtn>
           ))}
         </TypeRow>
@@ -625,53 +625,133 @@ export default function Travel() {
   );
 }
 
-const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-top:52px;padding-bottom:32px;`;
-const MapWrap = styled.div`width:100%;height:220px;position:relative;border-bottom:2px solid #1a1a1a;z-index:0;isolation:isolate;`;
+const Page = styled.div`width:100%;min-height:100vh;background:${p=>p.theme.bg};padding-top:52px;padding-bottom:32px;@media(min-width:768px){display:grid;grid-template-columns:55% 45%;grid-template-rows:auto 1fr;align-items:start;}`;
+const MapWrap = styled.div`width:100%;height:220px;position:relative;border-bottom:2px solid #1a1a1a;z-index:0;isolation:isolate;@media(min-width:768px){height:calc(100vh - 52px);position:sticky;top:52px;border-bottom:none;border-right:2px solid #1a1a1a;}`;
 const MapPlaceholder = styled.div`height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:${p=>p.theme.surface};color:${p=>p.theme.muted};font-size:14px;`;
 const GpsBadge = styled.div`position:absolute;top:10px;right:10px;background:#fff;border:2px solid #1a1a1a;color:#1a1a1a;font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;z-index:999;box-shadow:2px 2px 0 #1a1a1a;`;
 const MapTitle = styled.div`position:absolute;top:10px;left:10px;background:${p=>p.theme.primary};border:2px solid #1a1a1a;color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;z-index:999;box-shadow:2px 2px 0 #1a1a1a;text-transform:uppercase;letter-spacing:0.5px;`;
-const Content = styled.div`width:100%;padding:12px 14px;display:flex;flex-direction:column;gap:10px;`;
-const TypeRow = styled.div`display:grid;grid-template-columns:repeat(4,1fr);gap:6px;`;
-const TypeBtn = styled.button`display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;border-radius:4px;border:2px solid ${p=>p.$active?"#1a1a1a":"transparent"};background:${p=>p.$active?p.$color+"22":p.theme.surface};color:#1a1a1a;font-size:9px;font-weight:700;cursor:pointer;box-shadow:${p=>p.$active?"3px 3px 0 #1a1a1a":"none"};text-transform:uppercase;letter-spacing:0.5px;`;
-const BookCard = styled.div`background:${p=>p.theme.card};border:2px solid #1a1a1a;border-radius:4px;padding:16px;box-shadow:4px 4px 0 #1a1a1a;display:flex;flex-direction:column;gap:10px;`;
-const CardLabel = styled.div`font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#1a1a1a;`;
-const FieldLabel = styled.div`font-size:10px;font-weight:700;color:#6b5e4e;text-transform:uppercase;letter-spacing:1px;margin-bottom:-4px;`;
+const Content = styled.div`width:100%;padding:12px 14px;display:flex;flex-direction:column;gap:10px;@media(min-width:768px){padding:28px 32px;gap:16px;overflow-y:auto;height:calc(100vh - 52px);}`;
+const TypeRow = styled.div`display:grid;grid-template-columns:repeat(4,1fr);gap:6px;@media(min-width:768px){gap:10px;}`;
+const TypeBtn = styled.button`
+  display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;
+  border-radius:4px;border:2px solid ${p=>p.$active?"#1a1a1a":"transparent"};
+  background:${p=>p.$active?p.$color+"22":p.theme.surface};color:#1a1a1a;
+  font-size:9px;font-weight:700;cursor:pointer;
+  box-shadow:${p=>p.$active?"3px 3px 0 #1a1a1a":"none"};
+  text-transform:uppercase;letter-spacing:0.5px;
+  @media(min-width:768px){padding:22px 8px;font-size:13px;gap:10px;}
+`;
+const BookCard = styled.div`
+  background:${p=>p.theme.card};border:2px solid #1a1a1a;border-radius:4px;
+  padding:16px;box-shadow:4px 4px 0 #1a1a1a;
+  display:flex;flex-direction:column;gap:10px;
+  @media(min-width:768px){
+    padding:28px 32px;gap:20px;flex:1;
+    justify-content:space-between;
+  }
+`;
+const CardLabel = styled.div`
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#1a1a1a;
+  @media(min-width:768px){font-size:22px;}
+`;
+const FieldLabel = styled.div`
+  font-size:10px;font-weight:700;color:#6b5e4e;text-transform:uppercase;
+  letter-spacing:1px;margin-bottom:-4px;
+  @media(min-width:768px){font-size:13px;margin-bottom:-6px;}
+`;
 const ACWrap = styled.div`position:relative;`;
-const SearchRow = styled.div`display:flex;align-items:center;gap:8px;background:${p=>p.theme.surface};border:2px solid #1a1a1a;border-radius:4px;padding:0 12px;`;
+const SearchRow = styled.div`
+  display:flex;align-items:center;gap:8px;
+  background:${p=>p.theme.surface};border:2px solid #1a1a1a;border-radius:4px;padding:0 12px;
+  @media(min-width:768px){padding:0 18px;}
+`;
 const SearchDot = styled.div`width:9px;height:9px;border-radius:50%;background:${p=>p.$color};border:2px solid #1a1a1a;flex-shrink:0;`;
-const SearchInput = styled.input`flex:1;background:transparent;border:none;outline:none;color:#1a1a1a;font-size:13px;font-weight:500;padding:10px 0;font-family:inherit;&::placeholder{color:#6b5e4e;}`;
+const SearchInput = styled.input`
+  flex:1;background:transparent;border:none;outline:none;color:#1a1a1a;
+  font-size:13px;font-weight:500;padding:10px 0;font-family:inherit;
+  &::placeholder{color:#6b5e4e;}
+  @media(min-width:768px){font-size:16px;padding:16px 0;}
+`;
 const ClearBtn = styled.button`background:none;border:none;cursor:pointer;color:#6b5e4e;display:flex;align-items:center;padding:0;`;
-const SuggestList = styled.div`position:absolute;top:100%;left:0;right:0;background:#fff;border:2px solid #1a1a1a;border-radius:4px;box-shadow:3px 3px 0 #1a1a1a;z-index:50;overflow:hidden;margin-top:2px;max-height:220px;overflow-y:auto;`;
-const SuggestItem = styled.div`display:flex;align-items:center;gap:8px;padding:9px 12px;cursor:pointer;border-bottom:1px solid #f0f0f0;&:last-child{border-bottom:none;}&:hover{background:#f5f0e8;}`;
-const SuggestMain = styled.span`font-size:12px;font-weight:600;color:#1a1a1a;flex:1;`;
-const SuggestSub  = styled.span`font-size:10px;color:#6b5e4e;white-space:nowrap;`;
-const RouteList = styled.div`display:flex;flex-direction:column;gap:6px;max-height:220px;overflow-y:auto;`;
-const RouteOption = styled.div`display:flex;align-items:flex-start;gap:10px;background:${p=>p.$selected?"#0f766e18":"#fff"};border:2px solid ${p=>p.$selected?"#1a1a1a":"#e0e0e0"};border-radius:4px;padding:10px 12px;cursor:pointer;box-shadow:${p=>p.$selected?"2px 2px 0 #1a1a1a":"none"};&:hover{border-color:#1a1a1a;}`;
-const RouteNo = styled.div`font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#0f766e;min-width:52px;flex-shrink:0;`;
+const SuggestList = styled.div`
+  position:absolute;top:100%;left:0;right:0;background:#fff;
+  border:2px solid #1a1a1a;border-radius:4px;box-shadow:3px 3px 0 #1a1a1a;
+  z-index:50;overflow:hidden;margin-top:2px;max-height:220px;overflow-y:auto;
+`;
+const SuggestItem = styled.div`
+  display:flex;align-items:center;gap:8px;padding:9px 12px;cursor:pointer;
+  border-bottom:1px solid #f0f0f0;&:last-child{border-bottom:none;}&:hover{background:#f5f0e8;}
+  @media(min-width:768px){padding:13px 18px;}
+`;
+const SuggestMain = styled.span`font-size:12px;font-weight:600;color:#1a1a1a;flex:1;@media(min-width:768px){font-size:15px;}`;
+const SuggestSub  = styled.span`font-size:10px;color:#6b5e4e;white-space:nowrap;@media(min-width:768px){font-size:12px;}`;
+const RouteList = styled.div`
+  display:flex;flex-direction:column;gap:6px;max-height:220px;overflow-y:auto;
+  @media(min-width:768px){max-height:none;flex:1;overflow-y:auto;}
+`;
+const RouteOption = styled.div`
+  display:flex;align-items:flex-start;gap:10px;
+  background:${p=>p.$selected?"#0f766e18":"#fff"};
+  border:2px solid ${p=>p.$selected?"#1a1a1a":"#e0e0e0"};
+  border-radius:4px;padding:10px 12px;cursor:pointer;
+  box-shadow:${p=>p.$selected?"2px 2px 0 #1a1a1a":"none"};
+  &:hover{border-color:#1a1a1a;}
+  @media(min-width:768px){padding:16px 18px;}
+`;
+const RouteNo = styled.div`font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#0f766e;min-width:52px;flex-shrink:0;@media(min-width:768px){font-size:20px;min-width:72px;}`;
 const RouteInfo = styled.div`flex:1;display:flex;flex-direction:column;gap:2px;`;
-const RouteLong = styled.div`font-size:11px;font-weight:600;color:#1a1a1a;`;
-const RouteArrow = styled.div`font-size:11px;color:#6b5e4e;`;
-const RouteETA = styled.div`display:flex;align-items:center;gap:3px;font-size:10px;font-weight:700;color:#0f766e;margin-top:2px;`;
+const RouteLong = styled.div`font-size:11px;font-weight:600;color:#1a1a1a;@media(min-width:768px){font-size:14px;}`;
+const RouteArrow = styled.div`font-size:11px;color:#6b5e4e;@media(min-width:768px){font-size:14px;}`;
+const RouteETA = styled.div`display:flex;align-items:center;gap:3px;font-size:10px;font-weight:700;color:#0f766e;margin-top:2px;@media(min-width:768px){font-size:13px;}`;
 const SelectedMark = styled.div`font-size:14px;color:#0f766e;font-weight:700;flex-shrink:0;`;
 const ModeToggle = styled.div`display:grid;grid-template-columns:1fr 1fr;border:2px solid #1a1a1a;border-radius:4px;overflow:hidden;`;
-const ModeBtn = styled.button`display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;border:none;cursor:pointer;font-size:11px;font-weight:700;background:${p=>p.$active?"#1a1a1a":p.theme.surface};color:${p=>p.$active?"#fff":"#1a1a1a"};border-right:1px solid #1a1a1a;&:last-child{border-right:none;}`;
-const NoRouteMsg = styled.p`font-size:11px;color:#6b5e4e;font-style:italic;`;
-const FareStrip = styled.div`display:grid;grid-template-columns:repeat(auto-fit,minmax(60px,1fr));gap:8px;`;
-const FareChip = styled.div`background:${p=>p.$green?p.theme.tag:p.$yellow?"#fde68a":p.theme.surface};border:2px solid #1a1a1a;border-radius:4px;padding:9px 8px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;box-shadow:2px 2px 0 #1a1a1a;b{display:block;font-size:14px;font-weight:800;color:#1a1a1a;font-family:'Syne',sans-serif;}span{font-size:9px;font-weight:600;color:#6b5e4e;text-transform:uppercase;letter-spacing:0.5px;}`;
-const BookBtn = styled.button`width:100%;padding:13px;border-radius:4px;background:${p=>p.disabled?p.theme.surface:p.theme.primary};color:${p=>p.disabled?"#6b5e4e":"#fff"};border:2px solid #1a1a1a;font-size:13px;font-weight:700;cursor:${p=>p.disabled?"not-allowed":"pointer"};box-shadow:${p=>p.disabled?"none":"4px 4px 0 #1a1a1a"};`;
-const MetroLines = styled.div`display:flex;flex-direction:column;gap:6px;`;
-const MetroLine = styled.div`display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;color:#1a1a1a;`;
-const MetroDot = styled.div`width:10px;height:10px;border-radius:50%;background:${p=>p.$color};border:2px solid #1a1a1a;flex-shrink:0;`;
-const PopularTrains = styled.div`display:flex;flex-direction:column;gap:8px;`;
-const TrainGrid = styled.div`display:grid;grid-template-columns:1fr 1fr;gap:6px;`;
-const TrainChip = styled.div`background:#fff;border:2px solid #1a1a1a;border-radius:4px;padding:8px 10px;cursor:pointer;box-shadow:2px 2px 0 #1a1a1a;&:hover{background:#fffbeb;}`;
-const TrainChipNo   = styled.div`font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:#c17f3a;`;
-const TrainChipName = styled.div`font-size:10px;color:#6b5e4e;margin-top:1px;`;
-const Modal = styled.div`position:fixed;inset:0;background:rgba(245,240,232,0.88);display:flex;align-items:center;justify-content:center;z-index:200;padding:24px;`;
-const ModalCard = styled.div`background:${p=>p.theme.card};border:2px solid #1a1a1a;border-radius:4px;padding:22px;width:100%;max-width:340px;box-shadow:6px 6px 0 #1a1a1a;`;
+const ModeBtn = styled.button`
+  display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;
+  border:none;cursor:pointer;font-size:11px;font-weight:700;
+  background:${p=>p.$active?"#1a1a1a":p.theme.surface};
+  color:${p=>p.$active?"#fff":"#1a1a1a"};
+  border-right:1px solid #1a1a1a;&:last-child{border-right:none;}
+  @media(min-width:768px){padding:15px;font-size:14px;}
+`;
+const NoRouteMsg = styled.p`font-size:11px;color:#6b5e4e;font-style:italic;@media(min-width:768px){font-size:14px;}`;
+const FareStrip = styled.div`
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(60px,1fr));gap:8px;
+  @media(min-width:768px){gap:14px;}
+`;
+const FareChip = styled.div`
+  background:${p=>p.$green?p.theme.tag:p.$yellow?"#fde68a":p.theme.surface};
+  border:2px solid #1a1a1a;border-radius:4px;padding:9px 8px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:2px;box-shadow:2px 2px 0 #1a1a1a;
+  b{display:block;font-size:14px;font-weight:800;color:#1a1a1a;font-family:'Syne',sans-serif;}
+  span{font-size:9px;font-weight:600;color:#6b5e4e;text-transform:uppercase;letter-spacing:0.5px;}
+  @media(min-width:768px){
+    padding:18px 12px;
+    b{font-size:22px;}
+    span{font-size:12px;}
+  }
+`;
+const BookBtn = styled.button`
+  width:100%;padding:13px;border-radius:4px;
+  background:${p=>p.disabled?p.theme.surface:p.theme.primary};
+  color:${p=>p.disabled?"#6b5e4e":"#fff"};
+  border:2px solid #1a1a1a;font-size:13px;font-weight:700;
+  cursor:${p=>p.disabled?"not-allowed":"pointer"};
+  box-shadow:${p=>p.disabled?"none":"4px 4px 0 #1a1a1a"};
+  @media(min-width:768px){padding:20px;font-size:18px;margin-top:auto;}
+`;
+const MetroLines = styled.div`display:flex;flex-direction:column;gap:6px;@media(min-width:768px){gap:10px;}`;
+const MetroLine = styled.div`display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;color:#1a1a1a;@media(min-width:768px){font-size:14px;gap:12px;}`;
+const MetroDot = styled.div`width:10px;height:10px;border-radius:50%;background:${p=>p.$color};border:2px solid #1a1a1a;flex-shrink:0;@media(min-width:768px){width:14px;height:14px;}`;
+const PopularTrains = styled.div`display:flex;flex-direction:column;gap:8px;@media(min-width:768px){gap:12px;}`;
+const TrainGrid = styled.div`display:grid;grid-template-columns:1fr 1fr;gap:6px;@media(min-width:768px){grid-template-columns:repeat(3,1fr);gap:10px;}`;
+const TrainChip = styled.div`background:#fff;border:2px solid #1a1a1a;border-radius:4px;padding:8px 10px;cursor:pointer;box-shadow:2px 2px 0 #1a1a1a;&:hover{background:#fffbeb;}@media(min-width:768px){padding:14px 16px;}`;
+const TrainChipNo   = styled.div`font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:#c17f3a;@media(min-width:768px){font-size:18px;}`;
+const TrainChipName = styled.div`font-size:10px;color:#6b5e4e;margin-top:1px;@media(min-width:768px){font-size:13px;margin-top:4px;}`;
+const Modal = styled.div`position:fixed;inset:0;background:rgba(245,240,232,0.88);display:flex;align-items:center;justify-content:center;z-index:200;padding:16px;`;
+const ModalCard = styled.div`background:${p=>p.theme.card};border:2px solid #1a1a1a;border-radius:4px;padding:22px;width:100%;max-width:480px;box-shadow:6px 6px 0 #1a1a1a;max-height:90vh;overflow-y:auto;@media(min-width:768px){max-width:560px;padding:32px;}`;
 const ModalTop = styled.div`display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;`;
 const ModalTitle = styled.div`display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#1a1a1a;font-family:'Syne',sans-serif;`;
 const CloseBtn = styled.button`background:${p=>p.theme.surface};border:2px solid #1a1a1a;border-radius:4px;width:28px;height:28px;cursor:pointer;color:#1a1a1a;display:flex;align-items:center;justify-content:center;box-shadow:2px 2px 0 #1a1a1a;`;
 const QRWrap = styled.div`display:flex;justify-content:center;background:${p=>p.theme.surface};border:2px solid #1a1a1a;border-radius:4px;padding:14px;margin-bottom:14px;`;
 const TicketGrid = styled.div`display:flex;flex-direction:column;gap:5px;`;
-const TicketRow = styled.div`display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:6px 10px;border-radius:4px;background:${p=>p.$hi?p.theme.tag:p.theme.surface};border:${p=>p.$hi?"2px solid #1a1a1a":"1px solid transparent"};span{color:#6b5e4e;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.5px;}b{color:#1a1a1a;font-weight:700;}`;
+const TicketRow = styled.div`display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:6px 10px;border-radius:4px;background:${p=>p.$hi?p.theme.tag:p.theme.surface};border:${p=>p.$hi?"2px solid #1a1a1a":"1px solid transparent"};span{color:#6b5e4e;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.5px;}b{color:#1a1a1a;font-weight:700;}@media(min-width:768px){font-size:14px;padding:10px 14px;span{font-size:12px;}}`;

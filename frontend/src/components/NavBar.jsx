@@ -6,6 +6,7 @@ import {
   MdHome, MdAccountBalanceWallet, MdDirectionsBus,
   MdCardGiftcard, MdPerson, MdSettings, MdLogout,
 } from "react-icons/md";
+import { LogoFull } from "./Logo";
 import { supabase } from "../supabaseClient";
 
 const NAV_ITEMS = [
@@ -64,7 +65,7 @@ export default function NavBar() {
   return (
     <>
       <TopBar>
-        <Brand>TransitRewards</Brand>
+        <LogoFull size={32} />
         <Trigger onClick={toggleMenu} $open={open} aria-label={open ? "Close menu" : "Open menu"}>
           <Line $open={open} $top />
           <Line $open={open} />
@@ -89,7 +90,7 @@ export default function NavBar() {
               return (
                 <NavItem key={path}>
                   <NavLink onClick={() => goTo(path)} $active={active}>
-                    <NavIcon><Icon size={20} /></NavIcon>
+                    <NavIcon><Icon size={26} /></NavIcon>
                     <span>{label}</span>
                     {active && <ActiveDot />}
                   </NavLink>
@@ -112,24 +113,22 @@ export default function NavBar() {
 
 const TopBar = styled.header`
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 200;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0 20px;
   height: 52px;
   background: ${p => p.theme.card};
   border-bottom: ${p => p.theme.border};
   box-shadow: 0 4px 0 #1a1a1a;
-`;
 
-const Brand = styled.div`
-  font-family: 'Syne', sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  color: ${p => p.theme.primary};
-  letter-spacing: -0.3px;
+  @media (min-width: 768px) {
+    padding: 0 32px;
+  }
 `;
 
 const Trigger = styled.button`
@@ -168,7 +167,10 @@ const Line = styled.span`
 
 const FullNav = styled.nav`
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
   z-index: 199;
   background: ${p => p.$bg};
   pointer-events: ${p => p.$open ? "all" : "none"};
@@ -201,8 +203,12 @@ const NavInner = styled.div`
   flex-direction: column;
   min-height: 100vh;
   padding: 80px 28px 48px;
-`;
+  max-width: 900px;
 
+  @media (min-width: 768px) {
+    padding: 80px 60px 48px;
+  }
+`;
 const NavList = styled.ul`
   list-style: none;
   padding: 0;
@@ -211,7 +217,7 @@ const NavList = styled.ul`
 `;
 
 const NavItem = styled.li`
-  & + & { margin-top: 0.15em; }
+  & + & { margin-top: 0.3em; }
 `;
 
 const NavLink = styled.button`
@@ -225,7 +231,7 @@ const NavLink = styled.button`
   width: 100%;
 
   font-family: 'Syne', sans-serif;
-  font-size: clamp(2rem, 11vw, 3.4rem);
+  font-size: clamp(2.4rem, 12vw, 4.5rem);
   font-weight: 700;
   color: ${p => p.$active ? "#fff" : "rgba(255,255,255,0.65)"};
   letter-spacing: -0.5px;

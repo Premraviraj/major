@@ -19,6 +19,13 @@ input, button, select, textarea { font-family: inherit; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 0; }
 
+/* Max-width container — full width always, responsive grids handle layout */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
 /* Keep Leaflet map tiles below fixed overlays */
 .leaflet-pane,
 .leaflet-top,

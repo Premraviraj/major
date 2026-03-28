@@ -132,7 +132,7 @@ export default function Home() {
         <HeroLeft>
           <HeroLabel>WELCOME BACK</HeroLabel>
           <HeroName>{profile?.full_name || user?.email?.split("@")[0] || "Traveler"}</HeroName>
-          <HeroSub>Keep riding, keep earning</HeroSub>
+          <HeroSub>ride. earn. flex. 🔥</HeroSub>
         </HeroLeft>
         <TokenTile>
           <MdToken size={20} />
@@ -166,14 +166,14 @@ export default function Home() {
         {trips.length > 0 && (
           <ChartTile>
             <TileLabel>TOKEN TREND — LAST {last7.length} TRIPS</TileLabel>
-            <Line data={lineData} options={chartOpts} />
+            <ChartInner><Line data={lineData} options={{...chartOpts, maintainAspectRatio: false}} /></ChartInner>
           </ChartTile>
         )}
 
         {trips.length > 0 && (
           <DonutTile>
             <TileLabel>MODE SPLIT</TileLabel>
-            <Doughnut data={doughnutData} options={doughnutOpts} />
+            <ChartInner><Doughnut data={doughnutData} options={{...doughnutOpts, maintainAspectRatio: false}} /></ChartInner>
           </DonutTile>
         )}
 
@@ -202,44 +202,57 @@ const HeroTile = styled.div`
   width:100%;background:${p=>p.theme.primary};
   border-bottom:${p=>p.theme.border};
   padding:16px 16px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  @media(min-width:768px){padding:24px 32px 28px;}
 `;
 const HeroLeft = styled.div``;
 const HeroLabel = styled.div`font-size:10px;font-weight:700;color:rgba(255,255,255,0.65);letter-spacing:1.5px;margin-bottom:4px;`;
-const HeroName = styled.h1`font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:2px;`;
+const HeroName = styled.h1`font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:2px;@media(min-width:768px){font-size:32px;}`;
 const HeroSub = styled.p`font-size:12px;color:rgba(255,255,255,0.65);`;
 const TokenTile = styled.div`
   display:flex;flex-direction:column;align-items:center;gap:1px;
   background:#fff;border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};
   padding:10px 14px;box-shadow:${p=>p.theme.shadow};flex-shrink:0;
 `;
-const TNum = styled.div`font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:${p=>p.theme.primary};line-height:1;margin:2px 0;`;
+const TNum = styled.div`font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:${p=>p.theme.primary};line-height:1;margin:2px 0;@media(min-width:768px){font-size:32px;}`;
 const TLbl = styled.div`font-size:10px;font-weight:700;color:${p=>p.theme.muted};letter-spacing:0.5px;`;
 
-const Bento = styled.div`padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;`;
+const Bento = styled.div`
+  padding:12px 14px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  @media(min-width:768px){
+    padding:20px 32px;
+    grid-template-columns:1fr 1fr 1fr 1fr;
+    gap:16px;
+  }
+`;
 
 const StatTile = styled.div`
   background:${p=>p.$color||p.theme.card};border:${p=>p.theme.border};
   border-radius:${p=>p.theme.radius};padding:14px 12px;
   box-shadow:${p=>p.theme.shadow};
+  @media(min-width:768px){padding:32px 24px;}
 `;
-const StatIco = styled.div`color:#1a1a1a;margin-bottom:6px;`;
-const StatNum = styled.div`font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#1a1a1a;line-height:1;`;
-const StatU = styled.span`font-size:10px;font-weight:600;margin-left:1px;`;
-const StatLbl = styled.div`font-size:10px;font-weight:600;color:#1a1a1a;margin-top:3px;text-transform:uppercase;letter-spacing:0.5px;`;
+const StatIco = styled.div`color:#1a1a1a;margin-bottom:6px;@media(min-width:768px){margin-bottom:12px;}`;
+const StatNum = styled.div`font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#1a1a1a;line-height:1;@media(min-width:768px){font-size:36px;}`;
+const StatU = styled.span`font-size:10px;font-weight:600;margin-left:1px;@media(min-width:768px){font-size:14px;}`;
+const StatLbl = styled.div`font-size:10px;font-weight:600;color:#1a1a1a;margin-top:3px;text-transform:uppercase;letter-spacing:0.5px;@media(min-width:768px){font-size:12px;margin-top:6px;}`;
 
-const TransportTile = styled.div`grid-column:span 2;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};`;
-const TileLabel = styled.div`font-size:10px;font-weight:700;color:${p=>p.theme.muted};letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;`;
+const TransportTile = styled.div`grid-column:span 2;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};@media(min-width:768px){grid-column:span 4;padding:28px;}`;
+const TileLabel = styled.div`font-size:10px;font-weight:700;color:${p=>p.theme.muted};letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;@media(min-width:768px){font-size:12px;margin-bottom:16px;}`;
 const TTypeGrid = styled.div`display:grid;grid-template-columns:repeat(4,1fr);gap:8px;`;
-const TTypeCard = styled.div`background:${p=>p.theme.surface};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:12px 6px;text-align:center;box-shadow:3px 3px 0 #1a1a1a;color:#1a1a1a;`;
-const TTypeNum = styled.div`font-family:'Syne',sans-serif;font-size:18px;font-weight:800;margin:4px 0 2px;`;
-const TTypeLbl = styled.div`font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;`;
+const TTypeCard = styled.div`background:${p=>p.theme.surface};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:12px 6px;text-align:center;box-shadow:3px 3px 0 #1a1a1a;color:#1a1a1a;@media(min-width:768px){padding:28px 16px;}`;
+const TTypeNum = styled.div`font-family:'Syne',sans-serif;font-size:18px;font-weight:800;margin:4px 0 2px;@media(min-width:768px){font-size:36px;margin:10px 0 4px;}`;
+const TTypeLbl = styled.div`font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;@media(min-width:768px){font-size:12px;}`;
 
-const ChartTile = styled.div`grid-column:span 2;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};`;
-const DonutTile = styled.div`grid-column:span 2;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};`;
+const ChartTile = styled.div`grid-column:span 2;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};@media(min-width:768px){grid-column:span 3;padding:24px;height:320px;display:flex;flex-direction:column;}`;
+const DonutTile = styled.div`grid-column:span 2;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};@media(min-width:768px){grid-column:span 1;padding:24px;height:320px;display:flex;flex-direction:column;}`;
+const ChartInner = styled.div`flex:1;position:relative;min-height:160px;`;
 
-const LeaderTile = styled.div`grid-column:span 2;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};display:flex;flex-direction:column;gap:6px;`;
-const LRow = styled.div`display:flex;align-items:center;gap:10px;background:${p=>p.$me?p.theme.tag:p.theme.surface};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:10px 12px;`;
-const LRank = styled.div`font-size:16px;width:24px;text-align:center;`;
-const LAv = styled.div`font-size:20px;width:28px;text-align:center;`;
-const LName = styled.div`flex:1;font-size:13px;font-weight:${p=>p.$me?"700":"500"};color:#1a1a1a;`;
-const LScore = styled.div`display:flex;align-items:center;gap:3px;font-size:12px;font-weight:700;color:${p=>p.theme.primary};`;
+const LeaderTile = styled.div`grid-column:span 2;background:${p=>p.theme.card};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:14px;box-shadow:${p=>p.theme.shadow};display:flex;flex-direction:column;gap:6px;@media(min-width:768px){grid-column:span 4;padding:28px;gap:10px;}`;
+const LRow = styled.div`display:flex;align-items:center;gap:10px;background:${p=>p.$me?p.theme.tag:p.theme.surface};border:${p=>p.theme.border};border-radius:${p=>p.theme.radius};padding:10px 12px;@media(min-width:768px){padding:16px 20px;}`;
+const LRank = styled.div`font-size:16px;width:24px;text-align:center;@media(min-width:768px){font-size:22px;width:32px;}`;
+const LAv = styled.div`font-size:20px;width:28px;text-align:center;@media(min-width:768px){font-size:28px;width:36px;}`;
+const LName = styled.div`flex:1;font-size:13px;font-weight:${p=>p.$me?"700":"500"};color:#1a1a1a;@media(min-width:768px){font-size:16px;}`;
+const LScore = styled.div`display:flex;align-items:center;gap:3px;font-size:12px;font-weight:700;color:${p=>p.theme.primary};@media(min-width:768px){font-size:15px;}`;
