@@ -30,47 +30,31 @@ export function useRazorpay() {
       name: "TRIPP.",
       description,
 
-      // Show UPI as the default/first method, card as fallback
-      config: {
-        display: {
-          blocks: {
-            upi: {
-              name: "Pay via UPI",
-              instruments: [
-                { method: "upi" },
-              ],
-            },
-            card: {
-              name: "Pay via Card",
-              instruments: [
-                { method: "card" },
-              ],
-            },
-          },
-          sequence: ["block.upi", "block.card"],
-          preferences: {
-            show_default_blocks: false,
-          },
-        },
+      // Force only UPI + card, UPI listed first
+      method: {
+        upi: true,
+        card: true,
+        netbanking: false,
+        wallet: false,
+        emi: false,
+        paylater: false,
+      },
+
+      // Pre-fill test UPI VPA so user just hits pay
+      prefill: {
+        vpa: "success@razorpay",
       },
 
       handler: function (response) {
         onSuccess?.(response.razorpay_payment_id);
       },
 
-      prefill: {
-        // Test UPI VPA — works in test mode
-        vpa: "success@razorpay",
-      },
-
       theme: {
         color: themeColor || "#0f766e",
-        hide_topbar: false,
       },
 
       modal: {
         ondismiss: () => onFailure?.("Payment cancelled"),
-        backdropclose: false,
         escape: true,
         animation: true,
       },
