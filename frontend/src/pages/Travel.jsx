@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import { MapContainer, TileLayer, Marker, Popup, Circle, Polyline, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -80,6 +80,7 @@ function ACInput({ placeholder, value, onChange, suggestions, onSelect, dotColor
 export default function Travel() {
   const { user } = useAuth();
   const { pay } = useRazorpay();
+  const theme = useTheme();
   const [transportTypes, setTransportTypes] = useState([]);
   const [filter, setFilter] = useState("BMTC");
   const [pos, setPos] = useState(null);
@@ -272,6 +273,7 @@ export default function Travel() {
     pay({
       amount: price,
       description: `${filter} · ${fromName} → ${toName}`,
+      themeColor: theme.primary,
       onSuccess: async (paymentId) => {
         const km = Math.round(distKm);
         await supabase.from("trips").insert({

@@ -1,6 +1,3 @@
-// Real Razorpay integration
-// Uses Razorpay checkout.js loaded dynamically — no npm package needed
-
 function loadRazorpayScript() {
   return new Promise(resolve => {
     if (window.Razorpay) return resolve(true);
@@ -13,10 +10,10 @@ function loadRazorpayScript() {
 }
 
 export function useRazorpay() {
-  async function pay({ amount, description, onSuccess, onFailure }) {
+  async function pay({ amount, description, themeColor, onSuccess, onFailure }) {
     const loaded = await loadRazorpayScript();
     if (!loaded) {
-      onFailure?.("Failed to load payment gateway. Check your connection.");
+      onFailure?.("Failed to load payment gateway.");
       return;
     }
 
@@ -28,27 +25,54 @@ export function useRazorpay() {
 
     const options = {
       key: keyId,
-      amount: amount * 100,          // Razorpay expects paise
+      amount: amount * 100,
       currency: "INR",
       name: "TRIPP.",
       description,
-      image: "",                      // optional logo URL
+
+      // Show UPI as the default/first method, card as fallback
+      config: {
+        display: {
+          blocks: {
+            upi: {
+              name: "Pay via UPI",
+              instruments: [
+                { method: "upi" },
+              ],
+            },
+            card: {
+              name: "Pay via Card",
+              instruments: [
+                { method: "card" },
+              ],
+            },
+          },
+          sequence: ["block.upi", "block.card"],
+          preferences: {
+            show_default_blocks: false,
+          },
+        },
+      },
+
       handler: function (response) {
-        // response.razorpay_payment_id is the payment ID on success
         onSuccess?.(response.razorpay_payment_id);
       },
+
       prefill: {
-        name: "",
-        email: "",
-        contact: "",
+        // Test UPI VPA — works in test mode
+        vpa: "success@razorpay",
       },
+
       theme: {
-        color: "#0f766e",
+        color: themeColor || "#0f766e",
+        hide_topbar: false,
       },
+
       modal: {
-        ondismiss: () => {
-          onFailure?.("Payment cancelled");
-        },
+        ondismiss: () => onFailure?.("Payment cancelled"),
+        backdropclose: false,
+        escape: true,
+        animation: true,
       },
     };
 
